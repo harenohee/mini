@@ -21,213 +21,181 @@
             font-family: 'Gowun Dodum', sans-serif;
         }
 
-        .wrap-row {
-            width: 95%;
-            height: 600px;
-            margin: 20px auto;
-            border: 20px solid gold;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: row;
-            /*justify-content: center;*/
-            /*align-items: center;*/
-        }
         #profile {
             display: flex;
             flex-direction: row;
-            float: left;
-            height: 600px;
-            margin: 10px 10px auto 10px;
-
+            margin: 10px;
             border-radius: 10px;
+            background-color: #FBF46D;
         }
 
-         #introduce{
-            margin-top: 50px;
-            width: 95%;
-            max-width: 500px;
-        }
         #image > img {
-            float: left;
             width: 95%;
-            max-width: 500px;
-
-            margin: 20px;
+            max-width: 300px;
             border-radius: 10px;
+            margin:30px
         }
-        #mystyle{
-            float: right;
-            margin: auto;
-            border-radius: 10px;
 
-            width: 95%;
-            max-width: 500px;
-            height: auto;
+        #introduce {
+            border: 1px solid black;
+            margin:30px;
+            width:80%;
+            background-color: white;
+            padding-top:30px;
+            padding-left: 20px;
         }
 
         .mypost {
-            width: 90%;
-            height: auto;
-            margin: 20px auto 20px auto;
-
+            width: 99%;
+            margin: 20px 10px 20px 10px;
             box-shadow: 0px 0px 3px 0px black;
             padding: 20px;
         }
 
-        .mybtn {
+        .mybtn button {
             margin-top: 15px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border:0;
+            background-color: #E9ECEF;
+            color: #6c757d;
+        }
+        #post{
+            margin-right: 15px;
+
+        }
+        #likebutton{
+            border-radius: 5px;
+            font-weight: bold;
+            height:30px;
+            bottom:5px;
+            left:10px;
+            background-color:#FBF46D;
         }
 
-        /*#comment-list {*/
-        /*    width: 95%;*/
-        /*    max-width: 500px;*/
-        /*    margin: auto;*/
+        #blogbotton{
+            font-weight: bold;
+            background-color:#FBF46D;
+            border-radius: 5px;
+        }
 
-        /*    margin-top: 10px;*/
-        /*    margin-bottom: 10px;*/
-        /*}*/
+        #comment-list {
+            width: 95%;
+            max-width: 500px;
+            margin: auto;
 
-        /*#comment-list > .card-body {*/
-        /*    width: 90%;*/
-        /*    height: auto;*/
-        /*    margin: 20px auto 20px auto;*/
-        /*    border-bottom: solid 1px gray;*/
-        /*}*/
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #comment-list > .card {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #nav {
+            display: flex;
+            flex-direction: row;
+
+            padding: 10px;
+            margin: 10px;
+
+            border-radius: 10px;
+
+            background-color: #FBF46D;
+        }
+
+        .navbar-brand {
+            color: black;
+        }
     </style>
 
     <script>
+        function save_comment() {
 
-    $(document).ready(function () {
-        show_comment()
-        // show_like()
-    });
+        }
 
-    function save_comment() {
-        let name = $('#name').val()
-        let comment = $('#comment').val()
-        $.ajax({
-            type: 'POST',
-            url: '/mini',
-            data: {'name_give': name, 'comment_give': comment},
-            success: function (response) {
-                alert(response['msg'])
-                window.location.reload()
-            }
-        })
-    }
+        function plus_like() {
 
-    function show_comment() {
-        $.ajax({
-            type: "GET",
-            url: "/mini",
-            data: {},
-            success: function (response) {
-                let rows = response['comments']
-                for (let i = 0; i < rows.length; i++) {
-                    let name = rows[i]['name']
-                    let comment = rows[i]['comment']
+        }
 
-                    let temp_html = `<div class="mycards">
-                                            <div class="card-body" style="border-bottom: border-bottom: solid 1px gray; margin: 20px auto 20px auto; width: 90%;
-            height: auto;">
-                                                <blockquote class="blockquote mb-0">
-                                                    <footer class="blockquote-footer">${name}</footer>
-                                                    <p>${comment}</p>
-                                                </blockquote>
-                                            </div>
-                                     </div>`
-                    $('#comment-list').append(temp_html)
-                }
-
-            }
-        });
-    }
-
-    // function plus_like() {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "/mini",
-    //         data: {'like_give': '좋아요 누름'},
-    //         success: function (response) {
-    //             alert(response["msg"])
-    //             window.location.reload()
-    //         }
-    //     });
-    // }
-    //
-    // function show_like() {
-    //     $.ajax({
-    //         type: "GET",
-    //         url: "/mini",
-    //         data: {},
-    //         success: function (response) {
-    //             let rows = response['likes']
-    //             for (let i = 0; i < rows.length; i++) {
-    //                 let num = rows[i]['num']
-    //                 let temp_html = `${num}`
-    //                 $('#temp').text(temp_html)
-    //             }
-    //         }
-    //     });
-    // }
 
     </script>
 </head>
 
 <body>
-<div class="wrap-row">
+
+    <div id="nav">
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">파워레인저 소개</a>
+            </div>
+        </nav>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">최영진 대원</a>
+            </div>
+        </nav>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">손강익 대원</a>
+            </div>
+        </nav>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">홍다경 대원</a>
+            </div>
+        </nav>
+        <nav class="navbar bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">홍희진 대원</a>
+            </div>
+        </nav>
+    </div>
+
     <div id="profile">
         <div id="image">
-            <img src="image/selfie.jpg"/>
+            <img src="https://velog.velcdn.com/images/harenohee/post/7d409a0b-a17d-4251-8971-65ed550fea5f/image.jpg" class="img-thumbnail">
         </div>
-        <div id="introduce">
-            <h1>홍희진 <span id="like">🧡+1</span>
-                <button type="button" class="btn btn-danger" onclick="plus_like()">좋아요</button>
-            </h1>
-            <h3>MBTI: INFP</h3>
-            <h5 style="margin-top: 5px"><p>프로젝트 역할: 백엔드 파트<br/>
-                <ul>
-                    <li> 좋아요 버튼 클릭 시 좋아요 수 증가</li>
-                    <li> 작성된 방명록 DB에서 가져와 보여주기</li>
-                </ul>
-                </p>
-                프로젝트 소감: 어렵고 생각보다 재밌다 허허
-            </h5>
-            <h5 style="margin-top: 10px">안녕하세요! 저는 조용하지만 시끄러운 인프피랍니다.<br/>처음엔 낯을 가리지만 금방 마음을 열고 겉과 속이 같은 유리구슬같은 면모를
-                보여준답니다.<br/>
-                저는 누구나 쉽고 직관적으로 사용하면서 센스와 신선함은 잃지 않은 웹 서비스를 제공하는 프론트엔드 개발자가 되는 것이 목표입니다!</h5>
+        <div id="introduce" style='line-height:200%'>
+            <h1 style="display: inline">홍희진 대원  </h1>
+             <div id="likediv" style="display: inline">
+                <span id="like" style="font-size: 30px">💛+1 </span>
+                <button type="button" onclick="plus_like()" id="likebutton">좋아요</button>
+            </div>
 
+            <h3>🔥 MBTI : <span style="background-color: #FBF46D; font-size: 25px"> 열정적인 중재자(INFP) </span></h3>
+            <h5>🔎 프로젝트 역할: <span style="background-color: #FBF46D; font-size: 23px"><b> 백엔드(좋아요 기능/방명록 DB 저장) </b></span></h5>
+            <h5>🔎 프로젝트 소감: 어렵고..생각보다 재밌어요 </h5>
+            <br/>
+            <p style="font-size: 16px">
+                안녕하세요! 조용하지만 시끄럽고 차가워보이지만 따뜻한 사람. 그게 바로 접니다.<br/>
+                처음엔 낯을 가리지만 금방 마음을 열고, 겉과 속이 같은 유리구슬같은 면모를 갖고 있답니다.<br/>
+                저는 누구나 쉽고 직관적으로 사용하면서 센스와 신선함은 잃지 않은<br/>
+                웹 서비스를 제공하는 프론트엔드 개발자가 되는 것이 목표입니다!<br/>
+            </p>
+            <a href="https://velog.io/@harenohee"><button id="blogbotton" type="button">블로그</button></a>
         </div>
     </div>
-    <div id="mystyle">
-        <h5>
-            장점과 협업 스타일
-        </h5>
-    </div>
-</div>
 
-<div class="mypost">
+    <div class="mypost">
+        <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">💛</span>
+            <input id="name" type="text" class="form-control" placeholder="작성자" aria-label="Username"
+                   aria-describedby="addon-wrapping">
+        </div>
 
-    <div class="input-group flex-nowrap">
-        <span class="input-group-text" id="addon-wrapping">💜</span>
-        <input id="name" type="text" class="form-control" placeholder="작성자" aria-label="Username"
-               aria-describedby="addon-wrapping">
-    </div>
-
-    <div class="form-floating">
+        <div class="form-floating">
                 <textarea class="form-control" placeholder="Leave a comment here" id="comment"
                           style="height: 100px"></textarea>
-        <label for="floatingTextarea2">댓글</label>
+            <label for="floatingTextarea2">댓글</label>
+        </div>
+        <div class="mybtn">
+            <button id="post" onclick="save_comment()" type="button">게시</button>
+            <button id="drop" onclick="save_comment()" type="button">삭제</button>
+        </div>
+        <div class="mycards" id="comment-list">
+        </div>
     </div>
-    <div class="mybtn">
-        <button onclick="save_comment()" type="button" class="btn btn-dark">게시</button>
-        <button onclick="save_comment()" type="button" class="btn btn-dark">삭제</button>
-    </div>
-
-</div>
-<div class="mycards" id="comment-list">
-</div>
-
-
 </body>
 </html>
