@@ -26,7 +26,7 @@
             flex-direction: row;
             margin: 10px;
             border-radius: 10px;
-            background-color: #FBF46D;
+            background-color: #FAEA48;
         }
 
         #image > img {
@@ -65,34 +65,35 @@
 
         }
         #likebutton{
-            border-radius: 5px;
+            border-radius: 10px;
+            color: black;
             font-weight: bold;
             height:30px;
+            position: relative;
             bottom:5px;
             left:10px;
-            background-color:#FBF46D;
+            background-color:#FAEA48;
+            line-height: 20px;
         }
 
         #blogbotton{
             font-weight: bold;
-            background-color:#FBF46D;
+            background-color:#FAEA48;
             border-radius: 5px;
         }
 
-        #comment-list {
-            width: 95%;
-            max-width: 500px;
-            margin: auto;
+        .mycards {
 
-            margin-top: 10px;
-            margin-bottom: 10px;
+            margin-top: 50px;
+            width: 90%;
+            height: auto;
+
         }
 
-        #comment-list > .card {
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
+        /*#comment-list > .comment-card-body {*/
+        /*    margin-top: 10px;*/
+        /*    margin-bottom: 10px;*/
+        /*}*/
         #nav {
             display: flex;
             flex-direction: row;
@@ -102,25 +103,110 @@
 
             border-radius: 10px;
 
-            background-color: #FBF46D;
+            background-color: #FAEA48;
         }
 
         .navbar-brand {
             color: black;
         }
+
+        .container1 {
+
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+
+        }
+
+        .card {
+            width: 90%;
+            max-width: 400px;
+            height: 300px;
+            margin: 30px;
+
+
+        }
     </style>
 
-    <script>
-        function save_comment() {
+   <script>
 
-        }
+    $(document).ready(function () {
+        show_comment()
+        show_like()
+    });
 
-        function plus_like() {
+    function save_comment() {
+        let name = $('#name').val()
+        let comment = $('#comment').val()
+        $.ajax({
+            type: 'POST',
+            url: '/comments',
+            data: {'name_give': name, 'comment_give': comment},
+            success: function (response) {
+                alert(response['msg'])
+                window.location.reload()
+            }
+        })
+    }
 
-        }
+    function show_comment() {
+        $.ajax({
+            type: "GET",
+            url: "/comments",
+            data: {},
+            success: function (response) {
+                let rows = response['comments']
+                for (let i = 0; i < rows.length; i++) {
+                    let name = rows[i]['name']
+                    let comment = rows[i]['comment']
 
+                    let temp_html = `<div class="comment-card-body" style="border-bottom: solid 1px gray;
+            margin: 20px auto 15px 20px;">
+                                          <blockquote class="blockquote mb-0">
+                                            <footer class="blockquote-footer">${name}</footer>
+                                                <p style="margin-bottom: 5px">${comment}</p>
+                                          </blockquote>
+                                     </div>`
+
+                    $('#comment-list').append(temp_html)
+                }
+
+            }
+        });
+    }
+
+    function plus_like() {
+        $.ajax({
+            type: "POST",
+            url: "/likes",
+            data: {},
+            success: function (response) {
+                alert(response['msg'])
+                window.location.reload()
+            }
+        });
+    }
+
+    function show_like() {
+        $.ajax({
+            type: "GET",
+            url: "/likes",
+            data: {},
+            success: function (response) {
+                let rows = response['likes']
+                for (let i = 0; i < rows.length; i++) {
+                    let num = rows[i]['num']
+                    let temp_html = `${num}`
+                    $('#like').text(temp_html)
+                }
+            }
+        });
+    }
 
     </script>
+
 </head>
 
 <body>
@@ -155,17 +241,20 @@
 
     <div id="profile">
         <div id="image">
-            <img src="https://velog.velcdn.com/images/harenohee/post/7d409a0b-a17d-4251-8971-65ed550fea5f/image.jpg" class="img-thumbnail">
+            <img src="https://velog.velcdn.com/images/harenohee/post/7d409a0b-a17d-4251-8971-65ed550fea5f/image.jpg"
+                 class="img-thumbnail">
         </div>
         <div id="introduce" style='line-height:200%'>
-            <h1 style="display: inline">홍희진 대원  </h1>
-             <div id="likediv" style="display: inline">
-                <span id="like" style="font-size: 30px">💛+1 </span>
+            <h1 style="display: inline">홍희진 대원 </h1>
+            <div id="likediv" style="display: inline">
+                <span style="font-size: 30px">💛+</span><span id="like" style="font-size: 30px">1</span>
                 <button type="button" onclick="plus_like()" id="likebutton">좋아요</button>
+
             </div>
 
-            <h3>🔥 MBTI : <span style="background-color: #FBF46D; font-size: 25px"> 열정적인 중재자(INFP) </span></h3>
-            <h5>🔎 프로젝트 역할: <span style="background-color: #FBF46D; font-size: 23px"><b> 백엔드(좋아요 기능/방명록 DB 저장) </b></span></h5>
+            <h3>🔥 MBTI : <span style="background-color: #FDFDBD; font-size: 25px"> 열정적인 중재자(INFP) </span></h3>
+            <h5>🔎 프로젝트 역할: <span style="background-color: #FDFDBD; font-size: 23px"><b> 백엔드(좋아요 기능/방명록 DB 조회) </b></span>
+            </h5>
             <h5>🔎 프로젝트 소감: 어렵고..생각보다 재밌어요 </h5>
             <br/>
             <p style="font-size: 16px">
@@ -174,28 +263,80 @@
                 저는 누구나 쉽고 직관적으로 사용하면서 센스와 신선함은 잃지 않은<br/>
                 웹 서비스를 제공하는 프론트엔드 개발자가 되는 것이 목표입니다!<br/>
             </p>
-            <a href="https://velog.io/@harenohee"><button id="blogbotton" type="button">블로그</button></a>
+            <a href="https://velog.io/@harenohee">
+                <button id="blogbotton" type="button">블로그</button>
+            </a>
         </div>
     </div>
 
+    <div id="addtest">
+        <br/>
+        <h1> &nbsp; 💛 저의<span style="font-size: 65px; text-decoration: underline">TMI</span>가 궁금하신가요?</h1>
+        <br/>
+    </div>
+
+    <div class="container1" style="position: relative;">
+
+        <div class="card text-white" style="background-color:#FAEA48; float: left;">
+            <div class="card-header" style="font-size: 25px; color:black">취미</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size: 25px; color:black">#산책 #유튜브 #수다 #카페</h5>
+                <p class="card-text" style="font-size: 20px">여가시간은 대부분 편하게 보내는 걸 선호하는 편이에요. 좋아하는 장르의 컨텐츠도 보고 아무 생각없이 웃고나면 힐링이 됩니다.
+                친한 사람들과 카페에서 오랜 시간 이야기하는 것도 너무 좋아합니다. 저에게 산책은 취미이자 견주로서의 의무입니다..</p>
+            </div>
+        </div>
+
+        <div class="card text-white" style="background-color:#FAEA48; float: left;">
+            <div class="card-header" style="font-size: 25px; color:black">장점</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size: 25px; color:black">#긍정적 #몰두 #배려</h5>
+                <p class="card-text" style="font-size: 20px">저는 세상을 될 수 있으면 긍정적으로 바라보려고 노력하는 사람인 것 같아요.
+                기본적으로 눈치도 빠르고 저로 인해 불편해지는 순간을 못 견뎌해요.. 그 기저에는 상대방을 배려하고자 하는 마음이 큰 것 같습니다. </p>
+            </div>
+        </div>
+
+        <div class="card text-white" style="background-color:#FAEA48; float: left;">
+            <div class="card-header" style="font-size: 25px; color:black">협업 스타일</div>
+            <div class="card-body">
+                <h5 class="card-title" style="font-size: 25px; color:black">#좋은_게_좋은_거</h5>
+                <p class="card-text" style="font-size: 20px">우선 맡은 일을 완수하려고 부던히 노력합니다.(팀원에게 민폐끼치는게 죽기보다 싫은 사람..)<br/>토론을 통해 더 좋은 아이디어로 발전시키는 걸
+                    즐기고 만약 마찰이 생기면 둥글게 둥글게 넘어가는 편입니다. </p>
+            </div>
+        </div>
+
+        <div class="card text-white" style="background-color:#FAEA48; float: left;">
+            <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+            </div>
+        </div>
+
+    </div>
+
+<div>
     <div class="mypost">
         <div class="input-group flex-nowrap">
             <span class="input-group-text" id="addon-wrapping">💛</span>
             <input id="name" type="text" class="form-control" placeholder="작성자" aria-label="Username"
                    aria-describedby="addon-wrapping">
         </div>
-
         <div class="form-floating">
-                <textarea class="form-control" placeholder="Leave a comment here" id="comment"
-                          style="height: 100px"></textarea>
+                        <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                                  style="height: 100px"></textarea>
             <label for="floatingTextarea2">댓글</label>
         </div>
         <div class="mybtn">
             <button id="post" onclick="save_comment()" type="button">게시</button>
-            <button id="drop" onclick="save_comment()" type="button">삭제</button>
-        </div>
-        <div class="mycards" id="comment-list">
         </div>
     </div>
+
+    <div class="mycards" id="comment-list">
+    </div>
+</div>
+
 </body>
 </html>
+
